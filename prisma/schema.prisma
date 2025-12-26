@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  passwordHash String
+  createdAt    DateTime   @default(now())
+  activities   Activity[]
+  timeLogs     TimeLog[]
+}
+
+model Activity {
+  id            String    @id @default(cuid())
+  userId        String
+  name          String
+  targetMinutes Int       @default(1260)
+  color         String    @default("#3b82f6")
+  icon          String    @default("⏱️")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  timeLogs      TimeLog[]
+}
+
+model TimeLog {
+  id         String   @id @default(cuid())
+  userId     String
+  activityId String
+  minutes    Int
+  note       String?
+  source     String   // "TIMER", "MANUAL", "QUICK_ADD", "FOCUS_5"
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+}
