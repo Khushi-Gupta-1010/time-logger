@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "db:push": "prisma db push",
     "db:push:win": "set DATABASE_URL=file:./dev.db && prisma db push",
     "db:migrate": "prisma migrate dev",
