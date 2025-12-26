@@ -16,7 +16,7 @@ interface Activity {
   targetMinutes: number
   color: string
   icon: string
-  timeLogs: { minutes: number; createdAt: Date }[]
+  timeLogs: { id?: string; minutes: number; createdAt: Date }[]
 }
 
 interface ActivityCardProps {
@@ -335,7 +335,7 @@ export function ActivityCard({
       {lastLogId && (
         <UndoToast
           logId={lastLogId}
-          minutes={activity.timeLogs.find(log => log.id === lastLogId)?.minutes || 0}
+          minutes={5}
           activityName={activity.name}
           onUndo={() => {
             setLastLogId(null)
