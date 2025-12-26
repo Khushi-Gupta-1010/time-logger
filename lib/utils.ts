@@ -12,7 +12,7 @@ export function calculateStreak(timeLogs: { createdAt: Date }[]): number {
     })
     .sort((a, b) => b - a)
 
-  const uniqueDays = [...new Set(sortedLogs)]
+  const uniqueDays = Array.from(new Set(sortedLogs))
   
   let streak = 0
   let currentDay = today.getTime()
